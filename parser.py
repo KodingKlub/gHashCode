@@ -19,7 +19,7 @@ class Problem:
         for req in requests:
             self.req_per_endpoint[req.endpoint_id].append(req)
 
-    def get_videos_for_endpoint(self, endpoint_id):
+    def get_requests_for_endpoint(self, endpoint_id):
         return self.req_per_endpoint[endpoint_id]
 
 def get_problem(fname):
