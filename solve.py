@@ -4,7 +4,6 @@ import kordian as k
 import endpoint
 import req_description
 import cache_connection
-import sys
 
 class Problem:
     def __init__(self, video_sizes, endpoints, requests, num_caches, cache_size):
@@ -14,13 +13,7 @@ class Problem:
         self.num_caches = num_caches
         self.cache_size = cache_size
 
-def solve(problem):
-    print(problem.num_caches)
-    print(len(problem.endpoints))
-
-
-if __name__ == '__main__':
-    fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
+def get_problem(fname):
     with open(fname) as f:
         content = f.readlines()
 
@@ -36,8 +29,7 @@ if __name__ == '__main__':
     endpoints = []
 
     ct = 2
-    e = 0
-    while e < E:
+    for e in range(E):
         line = [int(s) for s in content[ct].split(" ")]
         latency = line[0]
         num_cache_conns = line[1]
@@ -51,10 +43,6 @@ if __name__ == '__main__':
 
         endp = endpoint.EndpointDescription(e, latency, num_cache_conns, cache_conns)
         endpoints.append(endp)
-        e += 1
-
-    for en in endpoints:
-        print(en.num_cache_connections)
 
     requests = []
     for i in range(R):
@@ -66,4 +54,4 @@ if __name__ == '__main__':
         ct += 1
 
     problem = Problem(videos, endpoints, requests, C, X)
-    solve(problem)
+    return problem
