@@ -1,7 +1,7 @@
 import numpy as np
 import wojtek as w
+import philipp as p
 import kordian as k
-import anna as a
 import parser
 import sys
 

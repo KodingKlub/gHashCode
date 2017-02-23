@@ -4,3 +4,4 @@ class EndpointDescription:
         self.dc_latency = dc_latency
         self.num_cache_connections = num_cache_connections
         self.cache_latencies = cache_latencies
+        self.requests = []

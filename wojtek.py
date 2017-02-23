@@ -1,10 +1,13 @@
+import numpy as np
 import philipp as p
 import kordian as k
-import solve
+import anna as a
+import parser
 import sys
 
-fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
-problem = solve.get_problem(fname)
+if __name__ == '__main__':
+    fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
+    problem = parser.get_problem(fname)
 
-print(problem.num_caches)
-print(len(problem.endpoints))
+    for r in problem.requests:
+        print(r.endpoint_id)
