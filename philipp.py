@@ -4,6 +4,8 @@ import kordian as k
 import anna as a
 import parser
 import sys
+import math
+from collections import OrderedDict
 
 def merge_combination(combination1, combination2, problem):
     merged_combination = combination1
@@ -77,12 +79,12 @@ def merge_combination_data(combinations, problem):
             N = N + 1
         else:
 
-            if len(combinations[N+1]) > X[N+1] + 1:
+            if len(combinations[N+1]) - 1 > X[N+1] + 1:
                 X[N+1] += 1
             else:
                 X[N+1] = 0
 
-                if len(combinations[N]) > X[N] + 1:
+                if len(combinations[N]) - 1 > X[N] + 1:
                     X[N] += 1
                 else:
                     if N > 0:
@@ -93,25 +95,52 @@ def merge_combination_data(combinations, problem):
         if N + 1 == len(problem.endpoints):
             success = True
 
-        print(N, len(problem.endpoints), X, merged_combination)
+    print(success, X)
 
-    print(success)
+def sort_combinations(combinations):
+    for k, acombinations in combinations.items():
+        combinations[k] = sorted(acombinations, key = lambda combination: -1 * combination['savings'])
+        # print('MEDIAN:')
+        # print(endpoint_median(combinations[k]))
+        # print(':::')
+
+    return combinations
+
+def endpoint_median(combinations):
+    print('EM')
+    print(combinations)
+    print(math.floor(len(combinations) / 2))
+    return combinations[math.floor(len(combinations) / 2)]
+
+def sort_endpoints(combinations):
+    return OrderedDict(sorted(combinations.items(), key = lambda x : endpoint_median(x)))
+    #return sorted(combinations.items, key = lambda x : x[1])
+    #return sorted(combinations.items(), key = lambda x, y : endpoint_median(y))
 
 if __name__ == '__main__':
     fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
     problem = parser.get_problem(fname)
 
-    print(savings(problem))
+    # print(savings(problem))
+
+    # combinations = k.get_combinations_dict(problem)
 
     combinations = {
         0: [
-            {1: (50, {0}), 2: (30,{3})},
-            {1: (50, {0}), 2: (30,{3})},
+            {1: (50, {0}), 2: (30,{3}), 3: (0,{}), 'savings': 2000},
+            {1: (50, {0}), 2: (30,{3}), 'savings': 9000},
+            {1: (50, {0}), 2: (30,{3}), 'savings': 4000},
         ],
         1: [
-            {1: (80,  {2}), 2: (80,{1,3})},
-            {1: (80,  {2}), 2: (80,{1,3})},
+            {1: (80,  {2}), 2: (80,{1,3}), 'savings': 1000},
+            {1: (0,   { }), 2: (80,{1,3}), 'savings': 500},
+            {1: (80,  {2}), 2: (80,{1,3}), 'savings': 6000},
         ]
     }
+
+    combinations = sort_combinations(combinations)
+    print(combinations)
+
+    # print(sort_endpoints(combinations))
 
     merge_combination_data(combinations, problem)
