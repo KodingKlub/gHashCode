@@ -25,22 +25,26 @@ def get_combinations_dict(problem):
 		video_combinations = powerset(videos)
 
 		all_combinations_endpoint = []
-
+		endpoint_savings = p.savings(problem)
 		for video_combination in video_combinations:
 			combinations = w.make_sets(video_combination, cache_ids)
 			all_combinations_subset = []
 			for combination in combinations:
 				combination_dict = {}
 				valid = True
+				savings = 0
 				for c in combination:
 					sum_vid_sizes = 0
 					for vid in c[1]:
 						sum_vid_sizes += problem.video_sizes[vid]
+						savings += endpoint_savings[endpoint][vid,c[0]]
 					if sum_vid_sizes > problem.cache_size:
 						valid = False
+						continue
 					entry = (sum_vid_sizes, set(c[1]))
 					combination_dict[c[0]] = entry
 				if valid:
+					combination_dict["savings"] = savings
 					all_combinations_subset.append(combination_dict)
 			all_combinations_endpoint += all_combinations_subset
 		endpoint_combinations[endpoint] = all_combinations_endpoint
@@ -49,3 +53,5 @@ def get_combinations_dict(problem):
 if __name__ == '__main__':
     fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
     problem = parser.get_problem(fname)
+    # print(p.savings(problem))
+    # print(get_combinations_dict(problem))
