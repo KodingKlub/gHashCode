@@ -12,6 +12,15 @@ class Problem:
         self.requests = requests
         self.num_caches = num_caches
         self.cache_size = cache_size
+        self.req_per_endpoint = {}
+        for i in range(len(endpoints)):
+            self.req_per_endpoint[i] = [];
+
+        for req in requests:
+            self.req_per_endpoint[req.endpoint_id].append(req)
+
+    def get_videos_for_endpoint(self, endpoint_id):
+        return self.req_per_endpoint[endpoint_id]
 
 def get_problem(fname):
     with open(fname) as f:
