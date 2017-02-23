@@ -49,24 +49,3 @@ def get_combinations_dict(problem):
 if __name__ == '__main__':
     fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
     problem = parser.get_problem(fname)
-    
-    
-
-    print(get_combinations_dict(problem))
-
-
-
-
-
-          # for video_id in video_ids:
-                # cache_combinations = []
-                # for cache_id in cache_ids:
-                #     combination = {}
-                #     for inner_cache_id in cache_ids:
-                #         if inner_cache_id == cache_id:
-                #             combination[inner_cache_id] = (problem.video_sizes[video_id],set([video_id]))
-                #         else:
-                #             combination[inner_cache_id] = (0,set([]))
-                #     cache_combinations.append(combination)
-                # combinations_temp[video_id]
-
