@@ -3,6 +3,7 @@ import philipp as p
 import kordian as k
 import endpoint
 import req_description
+import cache_connection
 import sys
 
 class Problem:
@@ -16,6 +17,7 @@ class Problem:
 def solve(problem):
     print(problem.num_caches)
     print(len(problem.endpoints))
+
 
 if __name__ == '__main__':
     fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
@@ -41,18 +43,18 @@ if __name__ == '__main__':
         num_cache_conns = line[1]
         cache_conns = []
         ct += 1
-        while num_cache_conns > 0:
+        for ii in range(num_cache_conns):
             sp = [int(s) for s in content[ct].split(" ")]
             ct += 1
-            cache_conns.append((sp[0], sp[1]))
-            num_cache_conns -= 1
+            cache_conn = cache_connection.CacheConnection(sp[0],sp[1])
+            cache_conns.append(cache_conn)
 
         endp = endpoint.EndpointDescription(e, latency, num_cache_conns, cache_conns)
         endpoints.append(endp)
         e += 1
 
-    for end in endpoints:
-        print(end.id, end.dc_latency)
+    for en in endpoints:
+        print(en.num_cache_connections)
 
     requests = []
     for i in range(R):
