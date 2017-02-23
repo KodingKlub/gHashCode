@@ -4,6 +4,7 @@ import philipp as p
 import kordian as k
 import parser
 import sys
+import numpy as np
 
 if __name__ == '__main__':
     fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
