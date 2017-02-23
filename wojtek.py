@@ -9,7 +9,8 @@ def print_combination(combination):
     used_caches = sorted([k for k,v in combination.items() if v[0]!=0])
     print(len(used_caches))
     for used_cache in used_caches:
-        print(" ".join([str(c) for c in combination[used_cache][1]]))
+        videos_str = " ".join([str(c) for c in combination[used_cache][1]])
+        print(used_cache, videos_str)
 
 if __name__ == '__main__':
     fname = sys.argv[1] if len(sys.argv) == 2 else "data/small.in"
