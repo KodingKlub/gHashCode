@@ -14,15 +14,34 @@ def print_combination(combination):
         print(used_cache, videos_str)
 
 
-def make_sets(items, num_of_boxes=3):
+def make_sets(items, cache_ids, num_of_boxes=3):
     allpossible = []
 
-    for tup in itertools.product(range(num_of_boxes), repeat=len(items)):
-        boxes = [list() for _ in range(num_of_boxes)]
+    for tup in itertools.product(range(len(cache_ids)), repeat=len(items)):
+        boxes = [list() for _ in range(len(cache_ids))]
         for item, box in zip(items, tup):
-            boxes[box].append(item)
+            # print (cache_ids[box])
+            # itee = (, item)
+            boxes[box].append({cache_ids[box]: (0, item)})
 
-        allpossible.append(boxes)
+        # print(boxes)
+        boxes_ = []
+        boxes__ = []
+        for b in boxes:
+            ob = {}
+            for e in b:
+                for k in e:
+                    if k not in ob:
+                        ob[k] = (0,[])
+                    ob[k][1].append(e[k][1])
+
+            boxes_.append(ob)
+            for k,v in ob.items():
+                boxes__.append((k,ob[k][1]))
+
+        # print(boxes__)
+        # print(boxes_)
+        allpossible.append(boxes__)
 
     return allpossible
 
@@ -39,7 +58,8 @@ if __name__ == '__main__':
     # print()
     # print()
     # print_combination(combination)
-    for p in make_sets(('A', 'B', 'C')):
-        for box in p:
-            print(str(box).ljust(20),)
-        print()
+    make_sets(('A', 'B', 'C'), [0,1,8])
+    # for p in make_sets(('A', 'B', 'C'), [0,1,8]):
+    #     for box in p:
+    #         print(str(box).ljust(20),)
+    #     print()
